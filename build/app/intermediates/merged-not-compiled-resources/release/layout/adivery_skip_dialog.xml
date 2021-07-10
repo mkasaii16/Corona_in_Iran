@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="300dp"
+  android:layout_height="wrap_content"
+  android:layout_gravity="center"
+  android:background="@drawable/adivery_skip_dialog_background"
+  android:gravity="right"
+  android:orientation="vertical"
+  android:padding="8dp">
+  <TextView
+    android:id="@+id/adivery_dialog_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:text="می‌خواهید ویدیو را ببندید؟"
+    android:textColor="#212529"
+    android:textSize="16sp" />
+  <TextView
+    android:id="@+id/adivery_dialog_description"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:text="برای دریافت جایزه، ویدیو را تا انتها ببینید."
+    android:textColor="#212529"
+    android:textSize="14sp" />
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp">
+
+    <TextView
+        android:id="@+id/adivery_button_skip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/adivery_secondary_button"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:text="بستن ویدیو"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+    <TextView
+      android:id="@+id/adivery_button_resume"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      android:layout_weight="1"
+      android:background="@drawable/adivery_primary_button"
+      android:gravity="center"
+      android:maxLines="1"
+      android:padding="8dp"
+      android:text="ادامه نمایش"
+      android:textColor="#ffffff"
+      android:textSize="16sp" />
+  </LinearLayout>
+</LinearLayout>
