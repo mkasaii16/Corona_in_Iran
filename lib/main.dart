@@ -14,11 +14,11 @@ void main() {
 }
 
 // ignore: non_constant_identifier_names
-String APPID = '71bbc764-51a0-4be1-bcd5-653c366584c2';
+String APPID = '*****';
 // ignore: non_constant_identifier_names
-String PLACEMENT_ID = "f994886a-2135-4055-b75f-2f333bdef15c";
+String PLACEMENT_ID = "****";
 // ignore: non_constant_identifier_names
-String PLACEMENT_ID_BANNER = 'd4b17344-5645-4ea1-a738-24b096c4c778';
+String PLACEMENT_ID_BANNER = '*****';
 
 String bohrani = '';
 String tedademroz = '';
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
   getdata() async {
     var dio = Dio();
     final response = await dio
-        .get("https://coronavirus-19-api.herokuapp.com/countries/iran");
+        .get("https://******");
     print('object');
     if (response.statusCode == 200) {
       data = (response.data);
