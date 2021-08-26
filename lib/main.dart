@@ -37,6 +37,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  void initState() {
+    super.initState();
+    AdiveryPlugin.initialize(APPID);
+    AdiveryPlugin.prepareInterstitialAd(PLACEMENT_ID);
+  }
+
+  _showInterstitial() {
+    Timer(const Duration(seconds: 6), () {
+      AdiveryPlugin.isLoaded(PLACEMENT_ID)
+          .then((isLoaded) => showPlacement(isLoaded!, PLACEMENT_ID));
+    });
+  }
+
+  void showPlacement(bool isLoaded, String placementId) {
+    if (isLoaded) {
+      AdiveryPlugin.show(placementId);
+    }
+  }
+
   getdata() async {
     var dio = Dio();
     final response = await dio
@@ -72,26 +91,7 @@ class _MyAppState extends State<MyApp> {
     ),
   ];
 
-  _showInterstitial() {
-    Timer(const Duration(seconds: 4), () {
-      AdiveryPlugin.isLoaded(PLACEMENT_ID)
-          .then((isLoaded) => showPlacement(isLoaded!, PLACEMENT_ID));
-    });
-  }
-
-  void showPlacement(bool isLoaded, String placementId) {
-    if (isLoaded) {
-      AdiveryPlugin.show(placementId);
-    }
-  }
-
   @override
-  void initState() {
-    super.initState();
-    AdiveryPlugin.initialize(APPID);
-    AdiveryPlugin.prepareInterstitialAd(PLACEMENT_ID);
-  }
-
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'آمار کرونا آنلاین',
@@ -111,12 +111,13 @@ class _MyAppState extends State<MyApp> {
           body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("images/1.gif"), fit: BoxFit.fitWidth)),
-            //backgroundColor: Colors.red[600],
-
+                    image: AssetImage("images/2.gif"),
+                    fit: BoxFit.fill,
+                    colorFilter: ColorFilter.mode(Colors.red, BlendMode.dst))),
             child: Center(
                 child: Column(children: [
               Row(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -127,21 +128,28 @@ class _MyAppState extends State<MyApp> {
                       },
                       child: Text(
                         'Mokav وبسایت',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: 'font3'),
                         textScaleFactor: 1,
                       )),
                   Spacer(),
                   TextButton(
-                    onPressed: () {
-                      launchURL(
-                          'mailto:<info@mfuzzy.com>?subject=<برنامه آمار کرونا ایران >&body=<ارتباط با توسعه دهنده   ->');
-                      // launch("email:" +
-                      //     Uri.encodeComponent('info@mfuzzy.com'));
-                    },
-                    child: Text('Email ایمیل',
-                        style: TextStyle(color: Colors.white),
-                        textScaleFactor: 1.0),
-                  ),
+                      onPressed: () {
+                        launchURL(
+                            'mailto:<info@mfuzzy.com>?subject=<برنامه آمار کرونا ایران >&body=<ارتباط با توسعه دهنده   ->');
+                        // launch("email:" +
+                        //     Uri.encodeComponent('info@mfuzzy.com'));
+                      },
+                      child: Text(
+                        'Email ایمیل',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: 'font3'),
+                        textScaleFactor: 1,
+                      )),
                   Spacer(),
                   TextButton(
                       onPressed: () {
@@ -150,11 +158,23 @@ class _MyAppState extends State<MyApp> {
                       },
                       child: Text(
                         'who.int منبع',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: 'font3'),
                         textScaleFactor: 1,
                       )),
                   Spacer(),
                 ],
+              ),
+              Divider(
+                color: Colors.grey[200],
+              ),
+              Text(
+                'آمار لحظه ای کرونا امروز',
+                style: TextStyle(
+                    color: Colors.white, fontSize: 16, fontFamily: 'font3'),
+                textScaleFactor: 1,
               ),
               Expanded(
                 child: FutureBuilder(
@@ -171,20 +191,20 @@ class _MyAppState extends State<MyApp> {
                       faalemroz = data['active'].toString(); //فعال امروز
                       bohrani = data['critical'].toString(); //بحرانی بدحال
                       if (fotemroz != '0') {
-                        fotemroz = ' فوتی امروز ' + fotemroz;
+                        fotemroz = 'فوتی ' + fotemroz;
                       } else {
                         fotemroz = 'هنوز تعداد فوتی اعلام نشده';
                       }
                       if (tedademroz != '0') {
-                        tedademroz = ' مبتلا امروز ' + tedademroz;
+                        tedademroz = 'مبتلا ' + tedademroz;
                       } else {
                         tedademroz = 'هنوز تعداد مبتلا اعلام نشده';
                       }
-                      bohrani = ' وخیم امروز ' + bohrani;
+                      bohrani = 'وخیم ' + bohrani;
                       faalemroz = ' مبتلا فعال ' + faalemroz;
-                      fotkol = ' فوتی کل ' + fotkol;
-                      tedadkol = ' مبتلا کل ' + tedadkol;
-                      behbod = ' بهبودی کل ' + behbod;
+                      fotkol = 'فوتی کل ' + fotkol;
+                      tedadkol = 'مبتلا کل ' + tedadkol;
+                      behbod = 'بهبودی کل ' + behbod;
                       List<String> titles = [
                         bohrani,
                         fotemroz,
@@ -198,11 +218,16 @@ class _MyAppState extends State<MyApp> {
                         children: <Widget>[
                           Expanded(
                             child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  border: Border.all(color: Colors.white)),
                               child: VerticalCardPager(
                                 initialPage: 1,
                                 textStyle: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 16,
+                                    fontFamily: 'font3'),
                                 titles: titles,
                                 images: images,
                                 onPageChanged: (page) {},
@@ -216,10 +241,13 @@ class _MyAppState extends State<MyApp> {
                     } else if (snapshot.hasError) {
                       return Text("${snapshot.error}");
                     }
-                    return LoadingIndicator(
-                      indicatorType: Indicator.ballPulse,
-                      color: Colors.red[900],
-                    );
+                    return Container(
+                        width: 100,
+                        height: 100,
+                        child: LoadingIndicator(
+                          indicatorType: Indicator.ballTrianglePath,
+                          color: Colors.green,
+                        ));
                   },
                 ),
               ),
