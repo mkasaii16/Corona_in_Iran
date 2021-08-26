@@ -1,4 +1,0 @@
-#Tue Jul 06 15:50:11 IRDT 2021
-base.0=G\:\\Programing\\AndroidStudioProjects\\coronairan\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
